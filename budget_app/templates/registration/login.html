@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <title>Studencki budzet</title>
+        
+       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+        
+        <div class="section">
+            <div class="container">
+                <h2 class="center">Zarejestruj się aby śledzić swój budżet już dziś!</h2>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn waves-effect"type='submit'>Zaloguj</button>
+                </form>
+                <br>
+                Nie masz konta?<a href='{% url "sign up" %}'><strong> Utwórz nowe konto.</strong></a>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </body>
+
+</html>

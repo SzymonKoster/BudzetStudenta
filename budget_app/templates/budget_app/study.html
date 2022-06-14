@@ -1,0 +1,163 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <title>Studencki Budzet</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <nav>
+            <div class="nav-wrapper">
+                <ul class="left hide-on-med-and-down" >
+                    <li><a href='{% url "index" %}' class='btn waves-effect waves-light brown' >Powrót</a></li>
+                </ul>
+                <a class='brand-logo center'><i class="material-icons">book</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href='{% url "logout" %}' class='btn'>Wyloguj</a></li>
+                </ul>
+            </div>
+        </nav>
+     <br>
+        <div class="section">
+            <div class="row">
+                <form class="col s12" action='{% url "add study" %}' method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="container center">
+                            <h4 class='center'>Twoje wydatki związane z nauką: <span style="color:green;">{{study}}</span> PLN</h4>
+                            <br>
+                            <br>
+                            <div class="input-field col s3">
+                                <input placeholder="Wprowadź nazwę" name="expense_name" id='expense_name' type='text' class='validate'>
+                                <label for='expense_name'>Dodaj wydatki</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder='Wprowadź kwotę ze znakiem +/-' name='cost' id='cost' type='text' class='validate'>
+                                <label for='cost'>Dodaj kwotę</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder='Wprowadź datę' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                                <label for="expense_date">Dodaj datę</label>
+                            </div>
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Dodaj wydatki
+                                <i class="material-icons right">add_circle</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <div class="row">
+                <form class="col s12" action='{% url "remove study" %}' method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="container center">
+                            <div class="input-field col s3">
+                                <input placeholder="Nazwa wydatku" name="expense_name" id='expense_name' type='text' class='validate'>
+                                <label for='expense_name'>Usuń wydatek z listy</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder='Wprowadź kwotę' name='cost' id='cost' type='text' class='validate'>
+                                <label for='cost'>Podaj kwotę wydatku</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder='Podaj datę zakupu' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                                <label for="expense_date">Potwierdź datę zakupu</label>
+                            </div>
+                            <button style="color:rgb(255, 255, 255);" class=" btn waves-effect waves-light red" type="submit" name="action">&nbspUsuń oszczędność&nbsp
+                                <i class="material-icons right">cancel</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <div class="row">
+                <form class="col s12" action='{% url "edit study" %}' method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="container center">
+                            <div class="input-field col s3">
+                                <input placeholder="Nazwa wydatku do edycji" name="expense_name" id='expense_name' type='text' class='validate'>
+                                <label for='expense_name'>Edytuj wydatek z listy</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <input placeholder='Nowa nazwa' name='expense_name' id='expense_name' type='text' class='validate'>
+                                <label for='cost'>Podaj nową nazwę wydatku</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <input placeholder='Nowa kwota' name="cost" id="cost" type="text" class='validate'>
+                                <label for="expense_date">Podaj nową kwotę wydatku</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <input placeholder='Nowa data' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                                <label for="expense_date">Podaj nową datę zakupu</label>
+                            </div>
+                            <button style="color:rgb(255, 255, 255);" class=" btn waves-effect waves-light black" type="submit" name="action">Edytuj wydatki
+                                <i class="material-icons right">create</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <div class="row">
+                <div class="container">
+                    <div class="col s6">
+                        <table class="striped centered responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>Kwota</th>
+                                    <th>Data transakcji</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for item in study_item %}
+                                <tr>
+                                    <td>{{ item.expense_name }}</td>
+                                    <td>{{ item.cost }}</td>
+                                    <td>{{ item.date_added}}</td>
+                                    <td></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col s6">
+                        <img class='responsive-img' src= "{% static 'budget_app/study.jpg' %}">
+                    </div>
+                </div>
+    </div>
+        <footer class="page-footer">
+            <div class="footer-copyright">
+              <div class="container">
+                © 2022 Projekt na Bazy - Szymon Koster
+              </div>
+            </div>
+          </footer>     
+    </div>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('.datepicker');
+                var instances = M.Datepicker.init(elems, {format:'yyyy-mm-dd'});
+            });
+        </script>
+    </body>
+
+</html>

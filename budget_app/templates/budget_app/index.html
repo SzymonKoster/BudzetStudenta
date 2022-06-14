@@ -1,0 +1,178 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <title>Studencki Budzet</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+        
+        <nav>
+            <div class="nav-wrapper">
+                <ul class="left hide-on-med-and-down" >
+                    <li><a href='{% url "entertainment" %}' class='btn waves-effect waves-light blue' >Rozrywka</a></li>
+                </ul>
+                <ul class="left hide-on-med-and-down">
+                    <li><a href='{% url "study" %}' class='btn waves-effect waves-light blue'>Nauka</a></li>
+                </ul>
+                <ul class="left hide-on-med-and-down">
+                    <li><a href='{% url "travel" %}' class='btn waves-effect waves-light blue'>Podróże</a></li>
+                </ul>
+                <ul class="left hide-on-med-and-down">
+                    <li><a href='{% url "savings" %}' class='btn waves-effect waves-light blue'>Skarbonka</a></li>
+                </ul>
+                <a href='{% url "index" %}' class='brand-logo center'><i class="material-icons">account_balance_wallet</i>Siemanko, {{ user }}!</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href='{% url "logout" %}' class='btn'>Wyloguj</a></li>
+                </ul>
+            </div>
+        </nav>
+     <br>
+        <div class="section">
+            <div class="row">
+                <form class="col s12" action='{% url "add item" %}' method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="container center">
+                            <h4 class='center'>Twoje przychody: <span style="color:green;">{{budget}}</span> PLN</h4>
+                            <h4 clas='center'>Twoje wydatki : <span style="color:red;">{{expenses}}</span> PLN</h4>
+                            <br>
+                            <br>
+                            <div class="input-field col s3">
+                                <input placeholder="Wprowadź nazwę" name="expense_name" id='expense_name' type='text' class='validate'>
+                                <label for='expense_name'>Dodaj wydatek</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder='Wprowadź kwotę ze znakiem +/-' name='cost' id='cost' type='text' class='validate'>
+                                <label for='cost'>Dodaj kwotę</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder='Wprowadź datę zakupu' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                                <label for="expense_date">Dodaj datę wydatku</label>
+                            </div>
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Dodaj wydatek
+                                <i class="material-icons right">add_circle</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <div class="row">
+                <form class="col s12" action='{% url "remove item" %}' method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="container center">
+                            <div class="input-field col s3">
+                                <input placeholder="Nazwa wydatku" name="expense_name" id='expense_name' type='text' class='validate'>
+                                <label for='expense_name'>Usuń wydatek z listy</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder='Wprowadź kwotę' name='cost' id='cost' type='text' class='validate'>
+                                <label for='cost'>Podaj kwotę wydatku</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <input placeholder='Podaj datę zakupu' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                                <label for="expense_date">Potwierdź datę zakupu</label>
+                            </div>
+                            <button style="color:rgb(255, 255, 255);" class=" btn waves-effect waves-light red" type="submit" name="action">&nbspUsuń&nbspwydatek&nbsp
+                                <i class="material-icons right">cancel</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <div class="row">
+                <form class="col s12" action='{% url "edit item" %}' method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="container center">
+                            <div class="input-field col s3">
+                                <input placeholder="Nazwa wydatku do edycji" name="expense_name" id='expense_name' type='text' class='validate'>
+                                <label for='expense_name'>Edytuj wydatek z listy</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <input placeholder='Nowa nazwa' name='expense_name' id='expense_name' type='text' class='validate'>
+                                <label for='cost'>Podaj nową nazwę wydatku</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <input placeholder='Nowa kwota' name="cost" id="cost" type="text" class='validate'>
+                                <label for="expense_date">Podaj nową kwotę wydatku</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <input placeholder='Nowa data' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                                <label for="expense_date">Podaj nową datę zakupu</label>
+                            </div>
+                            <button style="color:rgb(255, 255, 255);" class=" btn waves-effect waves-light black" type="submit" name="action">Edytuj wydatek
+                                <i class="material-icons right">create</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+        <div class="section">
+            <div class="row">
+                <div class="container">
+                    <div class="col s6">
+                        <table class="striped centered responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>Kwota</th>
+                                    <th>Data transakcji</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for item in expense_items %}
+                                <tr>
+                                    <td>{{ item.expense_name }}</td>
+                                    <td>{{ item.cost }}</td>
+                                    <td>{{ item.date_added}}</td>
+                                    <td></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col s6">
+                        <img class='responsive-img' src= "{% static 'budget_app/expense.jpg' %}">
+                    </div>
+                </div>
+    </div>
+        <footer class="page-footer">
+            <div class="footer-copyright">
+              <div class="container">
+                ® 2022 Projekt na Bazy - Szymon Koster
+              </div>
+            </div>
+          </footer>     
+    </div>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('.datepicker');
+                var instances = M.Datepicker.init(elems, {format:'yyyy-mm-dd'});
+            });
+        </script>
+    </body>
+
+</html>
