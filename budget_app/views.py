@@ -37,24 +37,20 @@ def remove_item(request):
     name = request.POST['expense_name']
     expense_cost = request.POST['cost']
     expense_date = request.POST['expense_date']
+    request.POST
     record = ExpenseInfo.objects.get(expense_name=name,cost=expense_cost,date_added=expense_date,user_expense=request.user)
     record.delete()
     return HttpResponseRedirect('app')
 
 def edit_item(request):
     name = request.POST['expense_name']
-    new_name = request.POST['expense_name']
+    new_name = request.POST['expense_new_name']
     new_expense_cost = request.POST['cost']
     new_expense_date = request.POST['expense_date']
-    record = ExpenseInfo.objects.filter(user_expense=request.user).filter(expense_name=name)
-    record.expense_name=new_name
-    record.cost=new_expense_cost
-    record.date_added=new_expense_date
-    record.update()
-    # record.update(expense_name=name,cost=expense_cost,date_added=expense_date,user_expense=request.user )
+    record = ExpenseInfo.objects.get(expense_name=name,user_expense=request.user)
+    record.delete()
+    ExpenseInfo.objects.create(expense_name=new_name,cost=new_expense_cost,date_added=new_expense_date,user_expense=request.user)
     return HttpResponseRedirect('app')    
-
-
 
 
 
@@ -90,19 +86,13 @@ def remove_entertainment(request):
 
 def edit_entertainment(request):
     name = request.POST['expense_name']
-    new_name = request.POST['expense_name']
+    new_name = request.POST['expense_new_name']
     new_expense_cost = request.POST['cost']
     new_expense_date = request.POST['expense_date']
-    record = EntertainmentInfo.objects.filter(user_expense=request.user).filter(expense_name=name)
-    record.expense_name=new_name
-    record.cost=new_expense_cost
-    record.date_added=new_expense_date
-    record.update()
-    # record.update(expense_name=name,cost=expense_cost,date_added=expense_date,user_expense=request.user )
+    record = EntertainmentInfo.objects.get(expense_name=name,user_expense=request.user)
+    record.delete()
+    EntertainmentInfo.objects.create(expense_name=new_name,cost=new_expense_cost,date_added=new_expense_date,user_expense=request.user)
     return HttpResponseRedirect('entertainment') 
-
-
-
 
 
 
@@ -115,7 +105,7 @@ def study_view(request):
     try:
         study_total = StudyInfo.objects.filter(user_expense=request.user).aggregate(study=Sum('cost',filter=Q(cost__gt=0), default=0))
         fig,ax=plt.subplots()
-        ax.bar(['Nauka'], [abs(study_total['study'])],color=['pink'])
+        ax.bar(['Nauka'], [abs(study_total['study'])],color=['orange'])
         ax.set_title('Twoje całkowite koszty związane z nauką')
         plt.savefig('budget_app/static/budget_app/study.jpg')
     except TypeError:
@@ -140,15 +130,12 @@ def remove_study(request):
 
 def edit_study(request):
     name = request.POST['expense_name']
-    new_name = request.POST['expense_name']
+    new_name = request.POST['expense_new_name']
     new_expense_cost = request.POST['cost']
     new_expense_date = request.POST['expense_date']
-    record = StudyInfo.objects.filter(user_expense=request.user).filter(expense_name=name)
-    record.expense_name=new_name
-    record.cost=new_expense_cost
-    record.date_added=new_expense_date
-    record.update()
-    # record.update(expense_name=name,cost=expense_cost,date_added=expense_date,user_expense=request.user )
+    record = StudyInfo.objects.get(expense_name=name,user_expense=request.user)
+    record.delete()
+    StudyInfo.objects.create(expense_name=new_name,cost=new_expense_cost,date_added=new_expense_date,user_expense=request.user)
     return HttpResponseRedirect('study') 
 
 
@@ -161,7 +148,7 @@ def travel_view(request):
     try:
         travels_total = TravelsInfo.objects.filter(user_expense=request.user).aggregate(travels=Sum('cost',filter=Q(cost__gt=0), default=0))
         fig,ax=plt.subplots()
-        ax.bar(['Podróże'], [abs(travels_total['travels'])],color=['orange'])
+        ax.bar(['Podróże'], [abs(travels_total['travels'])],color=['blue'])
         ax.set_title('Twoje całkowite koszty podróży')
         plt.savefig('budget_app/static/budget_app/travel.jpg')
     except TypeError:
@@ -186,15 +173,12 @@ def remove_travel(request):
 
 def edit_travel(request):
     name = request.POST['expense_name']
-    new_name = request.POST['expense_name']
+    new_name = request.POST['expense_new_name']
     new_expense_cost = request.POST['cost']
     new_expense_date = request.POST['expense_date']
-    record = TravelsInfo.objects.filter(user_expense=request.user).filter(expense_name=name)
-    record.expense_name=new_name
-    record.cost=new_expense_cost
-    record.date_added=new_expense_date
-    record.update()
-    # record.update(expense_name=name,cost=expense_cost,date_added=expense_date,user_expense=request.user )
+    record = TravelsInfo.objects.get(expense_name=name,user_expense=request.user)
+    record.delete()
+    TravelsInfo.objects.create(expense_name=new_name,cost=new_expense_cost,date_added=new_expense_date,user_expense=request.user)
     return HttpResponseRedirect('travel') 
 
 
@@ -209,7 +193,7 @@ def savings_view(request):
     try:
         savings_total = SavingsInfo.objects.filter(user_expense=request.user).aggregate(savings=Sum('cost',filter=Q(cost__gt=0), default=0))
         fig,ax=plt.subplots()
-        ax.bar(['Oszczędności'], [abs(savings_total['savings'])],color=['yellow'])
+        ax.bar(['Oszczędności'], [abs(savings_total['savings'])],color=['purple'])
         ax.set_title('Twoje całkowite oszczędności')
         plt.savefig('budget_app/static/budget_app/savings.jpg')
     except TypeError:
@@ -236,15 +220,12 @@ def remove_savings(request):
 
 def edit_savings(request):
     name = request.POST['expense_name']
-    new_name = request.POST['expense_name']
+    new_name = request.POST['expense_new_name']
     new_expense_cost = request.POST['cost']
     new_expense_date = request.POST['expense_date']
-    record = SavingsInfo.objects.filter(user_expense=request.user).filter(expense_name=name)
-    record.expense_name=new_name
-    record.cost=new_expense_cost
-    record.date_added=new_expense_date
-    record.update()
-    # record.update(expense_name=name,cost=expense_cost,date_added=expense_date,user_expense=request.user )
+    record = SavingsInfo.objects.get(expense_name=name,user_expense=request.user)
+    record.delete()
+    SavingsInfo.objects.create(expense_name=new_name,cost=new_expense_cost,date_added=new_expense_date,user_expense=request.user)
     return HttpResponseRedirect('savings') 
 
 

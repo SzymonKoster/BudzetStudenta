@@ -29,20 +29,23 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="container center">
-                            <h4 class='center'>Twoje wydatki związane z podróżą: <span style="color:green;">{{travel}}</span> PLN</h4>
+                            <h4 class='center'>Twoje wydatki związane z podróżą: <span style="color:rgb(0, 110, 255);">{{travels}}</span> PLN</h4>
                             <br>
                             <br>
                             <div class="input-field col s3">
                                 <input placeholder="Wprowadź nazwę" name="expense_name" id='expense_name' type='text' class='validate'>
                                 <label for='expense_name'>Dodaj wydatki</label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
                             </div>
                             <div class="input-field col s3">
-                                <input placeholder='Wprowadź kwotę ze znakiem +/-' name='cost' id='cost' type='text' class='validate'>
+                                <input placeholder='Wprowadź kwotę ze znakiem +/-' name='cost' id='cost' type='number' class='validate'>
                                 <label for='cost'>Dodaj kwotę</label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
                             </div>
                             <div class="input-field col s3">
-                                <input placeholder='Wprowadź datę' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                                <input placeholder='Wprowadź datę' name="expense_date" id="expense_date" type="date" class='datepicker'>
                                 <label for="expense_date">Dodaj datę</label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
                             </div>
                             <button class="btn waves-effect waves-light" type="submit" name="action">Dodaj wydatki
                                 <i class="material-icons right">add_circle</i>
@@ -61,14 +64,17 @@
                             <div class="input-field col s3">
                                 <input placeholder="Nazwa wydatku" name="expense_name" id='expense_name' type='text' class='validate'>
                                 <label for='expense_name'>Usuń wydatek z listy</label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
                             </div>
                             <div class="input-field col s3">
-                                <input placeholder='Wprowadź kwotę' name='cost' id='cost' type='text' class='validate'>
+                                <input placeholder='Wprowadź kwotę' name='cost' id='cost' type='number' class='validate'>
                                 <label for='cost'>Podaj kwotę wydatku</label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
                             </div>
                             <div class="input-field col s3">
-                                <input placeholder='Podaj datę zakupu' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                                <input placeholder='Podaj datę zakupu' name="expense_date" id="expense_date" type="date" class='datepicker'>
                                 <label for="expense_date">Potwierdź datę zakupu</label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
                             </div>
                             <button style="color:rgb(255, 255, 255);" class=" btn waves-effect waves-light red" type="submit" name="action">&nbspUsuń oszczędność&nbsp
                                 <i class="material-icons right">cancel</i>
@@ -87,26 +93,33 @@
                             <div class="input-field col s3">
                                 <input placeholder="Nazwa wydatku do edycji" name="expense_name" id='expense_name' type='text' class='validate'>
                                 <label for='expense_name'>Edytuj wydatek z listy</label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
                             </div>
                             <div class="input-field col s2">
-                                <input placeholder='Nowa nazwa' name='expense_name' id='expense_name' type='text' class='validate'>
-                                <label for='cost'>Podaj nową nazwę wydatku</label>
+                                <input placeholder='Nowa nazwa' name='expense_new_name' id='expense_new_name' type='text' class='validate'>
+                                <label for='expense_new_name'>Podaj nową nazwę wydatku</label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
                             </div>
                             <div class="input-field col s2">
-                                <input placeholder='Nowa kwota' name="cost" id="cost" type="text" class='validate'>
-                                <label for="expense_date">Podaj nową kwotę wydatku</label>
+                                <input placeholder='Nowa kwota' name="cost" id="cost" type="number" class='validate'>
+                                <label for="cost">Podaj nową kwotę wydatku</label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
                             </div>
                             <div class="input-field col s2">
-                                <input placeholder='Nowa data' name="expense_date" id="expense_date" type="text" class='datepicker'>
+                                <input placeholder='Nowa data' name="expense_date" id="expense_date" type="date" class='datepicker'>
                                 <label for="expense_date">Podaj nową datę zakupu</label>
+                                <span class="helper-text" data-error="wrong" data-success="right"></span>
                             </div>
-                            <button style="color:rgb(255, 255, 255);" class=" btn waves-effect waves-light black" type="submit" name="action">Edytuj wydatki
+                            <button style="color:rgb(255, 255, 255);" class=" btn waves-effect waves-light black" type="submit" name="action">Edytuj wydatek
                                 <i class="material-icons right">create</i>
                             </button>
                         </div>
                     </div>
                 </form>
             </div>
+        </div>
+        <div class="progress">
+            <div class="determinate" style="width: 100%"></div>
         </div>
         <div class="section">
             <div class="row">
