@@ -1,2 +1,2 @@
 # BudzetStudenta
-Projekt na Bazy Danych
+Projekt na Bazy Danych - 2022
