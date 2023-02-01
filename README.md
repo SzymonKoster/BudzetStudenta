@@ -1,2 +1,2 @@
 # BudzetStudenta
-Projekt na Bazy Danych - 2022
+Projekt na przedmiot "Bazy Danych" - 2022
